@@ -21,7 +21,8 @@ public class ParkingLotController {
     @PostMapping("/add")
     public ResponseEntity<ParkingLot> addParkingLot(@RequestParam String name, @RequestParam String address) {
         //add a new parking lot to the database
-        return new ResponseEntity<>(parkingLotService.addParkingLot(name, address), HttpStatus.CREATED);
+        ParkingLot parkingLot = parkingLotService.addParkingLot(name, address);
+        return new ResponseEntity<>(parkingLot,HttpStatus.CREATED);
     }
 
     @PostMapping("/{parkingLotId}/spot/add")
@@ -29,11 +30,11 @@ public class ParkingLotController {
         //create a new spot in the parkingLot with given id
         //the spot type should be the next biggest type in case the number of wheels are not 2 or 4, for 4+ wheels, it is others
         // Check if numberOfWheels is not null and positive
-       if(numberOfWheels > 4){
+//       if(numberOfWheels > 4){
            Spot spot = parkingLotService.addSpot(parkingLotId,numberOfWheels,pricePerHour);
            return new ResponseEntity<>(spot, HttpStatus.CREATED);
-       }
-       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//       }
+//       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
     }
 
@@ -47,8 +48,8 @@ public class ParkingLotController {
     @PutMapping("/{parkingLotId}/spot/{spotId}/update")
     public ResponseEntity<Spot> updateSpot(@PathVariable int parkingLotId, @PathVariable int spotId, @RequestParam int pricePerHour) {
         //update the details of a spot
-//        parkingLotService.updateSpot(parkingLotId,spotId,pricePerHour);
-        return new ResponseEntity<>(parkingLotService.updateSpot(parkingLotId,spotId,pricePerHour), HttpStatus.OK);
+   Spot updated =     parkingLotService.updateSpot(parkingLotId,spotId,pricePerHour);
+        return new ResponseEntity<>(updated, HttpStatus.OK);
     }
 
     @DeleteMapping("/{parkingLotId}/delete")
