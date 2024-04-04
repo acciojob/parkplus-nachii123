@@ -31,7 +31,7 @@ public class PaymentServiceImpl implements PaymentService {
         Reservation reservation = optionalReservation.get();
 
         // Validate payment amount
-        int billAmount = calculateBillAmount(reservation);
+        int billAmount = reservation.getNumberOfHours() * reservation.getSpot().getPricePerHour();
         if (amountSent < billAmount) {
             throw new Exception("Insufficient Amount");
         }
@@ -58,13 +58,14 @@ public class PaymentServiceImpl implements PaymentService {
         payment.setPaymentMode(paymentMode);
 
         // Save payment entity
-        return paymentRepository2.save(payment);
+         paymentRepository2.save(payment);
+         return payment;
     }
-    private int calculateBillAmount(Reservation reservation) {
-        // Your logic to calculate bill amount based on reservation details
-        // For example, if you have the price per hour and duration of reservation, you can calculate bill as pricePerHour * numberOfHours
-        return reservation.getNumberOfHours() * reservation.getNumberOfHours();
-    }
+//    private int calculateBillAmount(Reservation reservation) {
+//        // Your logic to calculate bill amount based on reservation details
+//        // For example, if you have the price per hour and duration of reservation, you can calculate bill as pricePerHour * numberOfHours
+//        return reservation.getNumberOfHours() * reservation.getNumberOfHours();
+//    }
 
 
 }
