@@ -42,48 +42,47 @@ public class ParkingLotServiceImpl implements ParkingLotService {
 
     @Override
     public Spot addSpot(int parkingLotId, Integer numberOfWheels, Integer pricePerHour) {
-//        return addSpot(parkingLotId,numberOfWheels,pricePerHour);
-//        Spot spot = new Spot();
-////        Optional<ParkingLot> parkingLot = parkingLotRepository1.findById(parkingLotId);
-//             ParkingLot parkingLot = parkingLotRepository1.findById(parkingLotId).orElse(null);
-//        spot.setParkingLot(parkingLot);
-//        spot.setPricePerHour(pricePerHour);
-//
-//        //Set the Spot Type
-//        if(numberOfWheels <=2){
-//            spot.setSpotType(SpotType.TWO_WHEELER);
-//        }else if (numberOfWheels <= 4){
-//            spot.setSpotType(SpotType.FOUR_WHEELER);
-//        }else{
-//            spot.setSpotType(SpotType.OTHERS);
-//        }
-//
-//        parkingLot.getSpotList().add(spot);
-//
-//        spot = spotRepository1.save(spot);
-//        return spot;
 
-        ParkingLot parkingLot = parkingLotRepository1.findById(parkingLotId).orElse(null);
-
+        Optional<ParkingLot> parkingLot = parkingLotRepository1.findById(parkingLotId);
         Spot spot = new Spot();
+        spot.setParkingLot(parkingLot.get());
         spot.setPricePerHour(pricePerHour);
-        spot.setParkingLot(parkingLot);
-        // Set the Spot Type
-        if (numberOfWheels <= 2) {
+
+        //Set the Spot Type
+        if(numberOfWheels <=2){
             spot.setSpotType(SpotType.TWO_WHEELER);
-        } else if (numberOfWheels <= 4) {
+        }else if (numberOfWheels <= 4){
             spot.setSpotType(SpotType.FOUR_WHEELER);
-        } else {
+        }else{
             spot.setSpotType(SpotType.OTHERS);
         }
 
+        parkingLot.get().getSpotList().add(spot);
 
-        //spotRepository1.save(spot); // Save to Database
-
-        parkingLot.getSpotList().add(spot);
-        parkingLotRepository1.save(parkingLot); // Save to Database
-
+        spot = spotRepository1.save(spot);
         return spot;
+
+//        ParkingLot parkingLot = parkingLotRepository1.findById(parkingLotId).orElse(null);
+//
+//        Spot spot = new Spot();
+//        spot.setPricePerHour(pricePerHour);
+//        spot.setParkingLot(parkingLot);
+//        // Set the Spot Type
+//        if (numberOfWheels <= 2) {
+//            spot.setSpotType(SpotType.TWO_WHEELER);
+//        } else if (numberOfWheels <= 4) {
+//            spot.setSpotType(SpotType.FOUR_WHEELER);
+//        } else {
+//            spot.setSpotType(SpotType.OTHERS);
+//        }
+//
+//
+//        //spotRepository1.save(spot); // Save to Database
+//
+//        parkingLot.getSpotList().add(spot);
+//        parkingLotRepository1.save(parkingLot); // Save to Database
+//
+//        return spot;
 
     }
 
